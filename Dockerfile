@@ -26,7 +26,9 @@ RUN pip3 install fastapi[standard]
 
 WORKDIR /app/ComfyUI/custom_nodes
 RUN git clone https://github.com/kijai/ComfyUI-KJNodes
+RUN pip install -r ComfyUI-KJNodes/requirements.txt
 RUN git clone https://github.com/cubiq/ComfyUI_essentials
+RUN pip install -r ComfyUI_essentials/requirements.txt
 
 # download models
 WORKDIR /app

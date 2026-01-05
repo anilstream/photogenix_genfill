@@ -12,7 +12,7 @@ from typing import Any, Mapping, Sequence, Union
 import requests
 import numpy as np
 import torch
-from PIL import Image
+from PIL import Image, ImageOps
 
 logger = logging.getLogger(__name__)
 
@@ -252,3 +252,19 @@ def fetch_image_data(image_url, attempts=5, timeout=30):
                 sleep(2 ** attempt)  # Exponential backoff: 1s, 2s, 4s
     logger.error(f"failed to fetch image from URL after {attempts} attempts: {image_url}")
     return None
+
+def get_outpaint_padding(img: bytes, target_size: tuple):
+    resized = ImageOps.contain(img, target_size)
+
+    W1, H1 = target_size
+    W2, H2 = resized.size
+
+    pad_x = W1 - W2
+    pad_y = H1 - H2
+
+    return {
+        "left": pad_x // 2,
+        "right": pad_x - pad_x // 2,
+        "top": pad_y // 2,
+        "bottom": pad_y - pad_y // 2,
+    }
