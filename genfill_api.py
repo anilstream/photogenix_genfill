@@ -60,11 +60,13 @@ async def genfill_preset_predict_post(request: Request, image: UploadFile = File
 
             if height and width:
                 padded = get_outpaint_padding(temp_image.name, (width,height))
-                resized = padded['resized']
-                left, right, top, bottom = padded["left"], padded["right"], padded["top"], padded["bottom"]
-                output = flux_outpainter.run(resized, top=top, bottom=bottom, left=left, right=right)
                 logger.info(f"padding: {padded}")
                 print(f"padding: {padded}")
+
+                resized = padded['resized']
+                resized.save(temp_image.name)
+                left, right, top, bottom = padded["left"], padded["right"], padded["top"], padded["bottom"]
+                output = flux_outpainter.run(temp_image.name, top=top, bottom=bottom, left=left, right=right)
             else:
                 output = flux_outpainter.run(temp_image.name, top=top,bottom=bottom, left=left, right=right)
             print(f"Output size: {Image.open(BytesIO(output)).size}")
