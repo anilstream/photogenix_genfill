@@ -11,7 +11,7 @@ from pydantic import HttpUrl
 
 # Local application
 from genfill_model import FluxOneRewardOutpainter
-from genfill_utils import fetch_image_data
+from genfill_utils import fetch_image_data, get_outpaint_padding, resize_image
 
 flux_outpainter = FluxOneRewardOutpainter()
 
@@ -44,7 +44,7 @@ def genfill_preset_predict_get(request: Request):
 @app.post("/genfill/generate")
 async def genfill_preset_predict_post(request: Request, image: UploadFile = File(...), image_url: HttpUrl = Form(None),
                                       height: int = Form(None), width: int = Form(None),
-                                      top: int = Form(None), bottom: int = Form(None), left: int = Form(None), right: int = Form(None)):
+                                      top: int = Form(0), bottom: int = Form(0), left: int = Form(0), right: int = Form(0)):
     try:
         t1 = time.perf_counter()
         logger.info(f"top: {top}, bottom: {bottom}, left: {left}, right: {right}, width: {width}, height: {height}")
@@ -56,10 +56,19 @@ async def genfill_preset_predict_post(request: Request, image: UploadFile = File
             temp_image.write(image)
             temp_image.flush()
 
+            if height and width:
+                padding = get_outpaint_padding(temp_image.name, (width,height))
+                left, right, top, bottom = padding["left"], padding["right"], padding["top"], padding["bottom"]
+                logger.info(f"padding: {padding}")
+
             output = flux_outpainter.run(temp_image.name, top=top,bottom=bottom, left=left, right=right)
 
         t2 = time.perf_counter() - t1
         logger.info(f"time taken: {t2}")
+
+        # resize to exact resolution
+        if height and width:
+            output = resize_image(output, (width, height))
 
         return Response(content=output, media_type="image/jpg",
                         headers={'Content-Disposition': f'attachment; filename=processed.jpg'})

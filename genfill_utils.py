@@ -253,8 +253,9 @@ def fetch_image_data(image_url, attempts=5, timeout=30):
     logger.error(f"failed to fetch image from URL after {attempts} attempts: {image_url}")
     return None
 
-def get_outpaint_padding(img: bytes, target_size: tuple):
-    resized = ImageOps.contain(img, target_size)
+def get_outpaint_padding(img: str, target_size: tuple[int, int]):
+    image = Image.open(img) if isinstance(img, str) else Image.open(BytesIO(img))
+    resized = ImageOps.contain(image, target_size)
 
     W1, H1 = target_size
     W2, H2 = resized.size
@@ -268,3 +269,11 @@ def get_outpaint_padding(img: bytes, target_size: tuple):
         "top": pad_y // 2,
         "bottom": pad_y - pad_y // 2,
     }
+
+def resize_image(img: bytes, target_size: tuple[int, int]):
+    image = Image.open(BytesIO(img))
+    resized = image.resize(target_size)
+    with BytesIO() as byte_stream:
+        resized.save(byte_stream, format='PNG')
+        image_bytes = byte_stream.getvalue()
+    return image_bytes
