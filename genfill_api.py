@@ -8,6 +8,8 @@ import uvicorn
 from fastapi import FastAPI, File, Form, Request, Response, UploadFile
 from fastapi.templating import Jinja2Templates
 from pydantic import HttpUrl
+from PIL import Image
+from io import BytesIO
 
 # Local application
 from genfill_model import FluxOneRewardOutpainter
@@ -60,15 +62,18 @@ async def genfill_preset_predict_post(request: Request, image: UploadFile = File
                 padding = get_outpaint_padding(temp_image.name, (width,height))
                 left, right, top, bottom = padding["left"], padding["right"], padding["top"], padding["bottom"]
                 logger.info(f"padding: {padding}")
+                print(f"padding: {padding}")
 
+            print(Image.open(temp_image.name).size)
             output = flux_outpainter.run(temp_image.name, top=top,bottom=bottom, left=left, right=right)
+            print(Image.open(BytesIO(output)).size)
 
         t2 = time.perf_counter() - t1
         logger.info(f"time taken: {t2}")
 
         # resize to exact resolution
         if height and width:
-            output = resize_image(output, (width, height))
+             output = resize_image(output, (width, height))
 
         return Response(content=output, media_type="image/jpg",
                         headers={'Content-Disposition': f'attachment; filename=processed.jpg'})
