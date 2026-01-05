@@ -110,7 +110,7 @@ class FluxOneRewardOutpainter(object):
 
             simplemath_176 = self.simplemath.execute(
                 value="a/b",
-                a=get_value_at_index(getimagesize_177, 0),
+                a=get_value_at_index(getimagesize_177, 1),
                 b=get_value_at_index(self.intconstant_175, 0),
             )
 
