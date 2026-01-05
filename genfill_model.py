@@ -79,6 +79,7 @@ class FluxOneRewardOutpainter(object):
         self.fluxguidance = NODE_CLASS_MAPPINGS["FluxGuidance"]()
         self.conditioningzeroout = NODE_CLASS_MAPPINGS["ConditioningZeroOut"]()
         self.getimagesize = NODE_CLASS_MAPPINGS["GetImageSize"]()
+        self.getimagesizeandcount = NODE_CLASS_MAPPINGS["GetImageSizeAndCount"]()
         self.imagepadforoutpaint = NODE_CLASS_MAPPINGS["ImagePadForOutpaint"]()
         self.imageresizekjv2 = NODE_CLASS_MAPPINGS["ImageResizeKJv2"]()
         self.inpaintmodelconditioning = NODE_CLASS_MAPPINGS["InpaintModelConditioning"]()
@@ -101,9 +102,11 @@ class FluxOneRewardOutpainter(object):
             )
 
 
-            getimagesize_177 = self.getimagesize.get_size(
-                image=get_value_at_index(loadimage_17, 0), unique_id=7167835406495741764
-            )
+            getimagesize_177 = self.getimagesizeandcount.getsize(
+            image=get_value_at_index(loadimage_17, 0))
+        #)self.getimagesize.get_size(
+                #image=get_value_at_index(loadimage_17, 0), unique_id=7167835406495741764
+            #)
 
             simplemath_176 = self.simplemath.execute(
                 value="a/b",
