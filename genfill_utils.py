@@ -264,6 +264,7 @@ def get_outpaint_padding(img: str, target_size: tuple[int, int]):
     pad_y = H1 - H2
 
     return {
+        "resized": resized,
         "left": pad_x // 2,
         "right": pad_x - pad_x // 2,
         "top": pad_y // 2,

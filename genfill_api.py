@@ -59,14 +59,15 @@ async def genfill_preset_predict_post(request: Request, image: UploadFile = File
             temp_image.flush()
 
             if height and width:
-                padding = get_outpaint_padding(temp_image.name, (width,height))
-                left, right, top, bottom = padding["left"], padding["right"], padding["top"], padding["bottom"]
-                logger.info(f"padding: {padding}")
-                print(f"padding: {padding}")
+                padded = get_outpaint_padding(temp_image.name, (width,height))
+                resized = padded['resized']
+                left, right, top, bottom = padded["left"], padded["right"], padded["top"], padded["bottom"]
+                output = flux_outpainter.run(resized, top=top, bottom=bottom, left=left, right=right)
+                logger.info(f"padding: {padded}")
+                print(f"padding: {padded}")
 
-            print(Image.open(temp_image.name).size)
             output = flux_outpainter.run(temp_image.name, top=top,bottom=bottom, left=left, right=right)
-            print(Image.open(BytesIO(output)).size)
+            print(f"Output size: {Image.open(BytesIO(output)).size}")
 
         t2 = time.perf_counter() - t1
         logger.info(f"time taken: {t2}")
