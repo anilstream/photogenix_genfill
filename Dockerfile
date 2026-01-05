@@ -42,7 +42,7 @@ RUN wget https://huggingface.co/Comfy-Org/OneReward_repackaged/resolve/main/spli
 RUN wget https://huggingface.co/camenduru/FLUX.1-dev/resolve/fc63f3204a12362f98c04bc4c981a06eb9123eee/FLUX.1-Turbo-Alpha.safetensors -O ComfyUI/models/loras/FLUX.1-Turbo-Alpha.safetensors
 
 
-RUN wget https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors -O ComfyUI/models/clip/t5xxl_fp8_e4m3fn.safetensors
+RUN wget https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn_scaled.safetensors -O ComfyUI/models/clip/t5xxl_fp8_e4m3fn_scaled.safetensors
 RUN wget https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors -O ComfyUI/models/clip/clip_l.safetensors
 RUN wget https://huggingface.co/fofr/comfyui/resolve/main/vae/ae.safetensors -O ComfyUI/models/vae/ae.safetensors
 

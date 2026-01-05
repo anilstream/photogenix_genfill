@@ -37,7 +37,7 @@ class FluxOneRewardOutpainter(object):
         self.dualcliploader = NODE_CLASS_MAPPINGS["DualCLIPLoader"]()
         self.dualcliploader_145 = self.dualcliploader.load_clip(
             clip_name1="clip_l.safetensors",
-            clip_name2="t5xxl_fp16.safetensors",
+            clip_name2="t5xxl_fp8_e4m3fn_scaled.safetensors",
             type="flux",
             device="default",
         )
