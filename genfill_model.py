@@ -104,9 +104,6 @@ class FluxOneRewardOutpainter(object):
 
             getimagesize_177 = self.getimagesizeandcount.getsize(
             image=get_value_at_index(loadimage_17, 0))
-        #)self.getimagesize.get_size(
-                #image=get_value_at_index(loadimage_17, 0), unique_id=7167835406495741764
-            #)
 
             simplemath_176 = self.simplemath.execute(
                 value="a/b",
@@ -174,14 +171,13 @@ class FluxOneRewardOutpainter(object):
                 vae=get_value_at_index(self.vaeloader_134, 0),
             )
 
-            getimagesize_163 = self.getimagesize.get_size(
+            getimagesize_163 = self.getimagesizeandcount.getsize(
                 image=get_value_at_index(imagepadforoutpaint_142, 0),
-                unique_id=4182233309666817756,
             )
 
             imageresizekjv2_161 = self.imageresizekjv2.resize(
-                width=get_value_at_index(getimagesize_163, 0),
-                height=get_value_at_index(getimagesize_163, 1),
+                width=get_value_at_index(getimagesize_163, 1),
+                height=get_value_at_index(getimagesize_163, 2),
                 upscale_method="bilinear",
                 keep_proportion="resize",
                 pad_color="0, 0, 0",
