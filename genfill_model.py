@@ -88,7 +88,7 @@ class FluxOneRewardOutpainter(object):
         with torch.inference_mode():
 
             loadimage_17 = self.loadimage.load_image(
-                image="replicate-prediction-21yq6xyvwhrmw0cv7bpaxt8d3w.webp"
+                image=image
             )
 
             fluxguidance_135 = self.fluxguidance.EXECUTE_NORMALIZED(
