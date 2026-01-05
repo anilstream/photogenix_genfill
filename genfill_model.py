@@ -102,7 +102,7 @@ class FluxOneRewardOutpainter(object):
 
 
             getimagesize_177 = self.getimagesize.get_size(
-                image=get_value_at_index(loadimage_17, 0),
+                image=get_value_at_index(loadimage_17, 0), unique_id=7167835406495741764
             )
 
             simplemath_176 = self.simplemath.execute(
