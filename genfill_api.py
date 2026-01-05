@@ -65,8 +65,8 @@ async def genfill_preset_predict_post(request: Request, image: UploadFile = File
                 output = flux_outpainter.run(resized, top=top, bottom=bottom, left=left, right=right)
                 logger.info(f"padding: {padded}")
                 print(f"padding: {padded}")
-
-            output = flux_outpainter.run(temp_image.name, top=top,bottom=bottom, left=left, right=right)
+            else:
+                output = flux_outpainter.run(temp_image.name, top=top,bottom=bottom, left=left, right=right)
             print(f"Output size: {Image.open(BytesIO(output)).size}")
 
         t2 = time.perf_counter() - t1
